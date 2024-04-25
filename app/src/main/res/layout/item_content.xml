@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardElevation="16dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="166dp">
+
+        <TextView
+            android:id="@+id/itemTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/itemTitleLabel"
+            app:layout_constraintTop_toTopOf="@+id/itemTitleLabel" />
+
+        <TextView
+            android:id="@+id/itemExpireDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/itemTitle"
+            app:layout_constraintStart_toStartOf="@+id/itemTitle"
+            app:layout_constraintTop_toTopOf="@+id/itemExpireDateLabel" />
+
+        <TextView
+            android:id="@+id/itemTitleLabel"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/itemExpireDateLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="ExpireDate"
+            app:layout_constraintEnd_toEndOf="@+id/itemTitleLabel"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/itemTitleLabel"
+            app:layout_constraintTop_toBottomOf="@+id/itemTitleLabel" />
+
+        <TextView
+            android:id="@+id/itemCategoryLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Category"
+            app:layout_constraintEnd_toEndOf="@+id/itemExpireDateLabel"
+            app:layout_constraintStart_toStartOf="@+id/itemExpireDateLabel"
+            app:layout_constraintTop_toBottomOf="@+id/itemExpireDateLabel" />
+
+        <TextView
+            android:id="@+id/itemQuantityLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Quantity"
+            app:layout_constraintEnd_toEndOf="@+id/itemCategoryLabel"
+            app:layout_constraintStart_toStartOf="@+id/itemCategoryLabel"
+            app:layout_constraintTop_toBottomOf="@+id/itemCategoryLabel" />
+
+        <TextView
+            android:id="@+id/itemCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/itemExpireDate"
+            app:layout_constraintStart_toStartOf="@+id/itemExpireDate"
+            app:layout_constraintTop_toTopOf="@+id/itemCategoryLabel" />
+
+        <TextView
+            android:id="@+id/itemQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/itemCategory"
+            app:layout_constraintStart_toStartOf="@+id/itemCategory"
+            app:layout_constraintTop_toTopOf="@+id/itemQuantityLabel" />
+
+        <TextView
+            android:id="@+id/itemExpiredLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Expired"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itemQuantityLabel"
+            app:layout_constraintStart_toStartOf="@+id/itemQuantityLabel"
+            app:layout_constraintTop_toBottomOf="@+id/itemQuantityLabel" />
+
+        <TextView
+            android:id="@+id/itemExpired"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/itemQuantity"
+            app:layout_constraintStart_toStartOf="@+id/itemQuantity"
+            app:layout_constraintTop_toTopOf="@+id/itemExpiredLabel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
