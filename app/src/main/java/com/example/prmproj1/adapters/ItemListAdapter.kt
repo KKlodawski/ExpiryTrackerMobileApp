@@ -1,10 +1,8 @@
 package com.example.prmproj1.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.prmproj1.R
 import com.example.prmproj1.databinding.ItemContentBinding
 import com.example.prmproj1.model.Category
 import com.example.prmproj1.model.item
@@ -15,13 +13,13 @@ class ItemObject(val itemViewBinding: ItemContentBinding) : RecyclerView.ViewHol
             itemTitle.text = itemObject.title
             itemExpireDate.text = itemObject.expireDate.format(DateTimeFormatter.ISO_DATE)
             itemCategory.text = itemObject.category.toString()
-            itemQuantity.text = itemObject.quantity.toString()
+            itemQuantity.text = if(itemObject.quantity == null) "Unspecified" else itemObject.quantity.toString()
             itemExpired.text = if (itemObject.isExpired()) "No" else "Yes"
         }
 }
 
 class ItemListAdapter : RecyclerView.Adapter<ItemObject>() {
-    var itemList: List<item> = emptyList()
+    var itemList: List<item> = mutableListOf()
     var filteredItemList: List<item> = emptyList()
     var filterCategory: Category? = null
     var filterExpired: Boolean? = null
@@ -52,5 +50,6 @@ class ItemListAdapter : RecyclerView.Adapter<ItemObject>() {
         }
         notifyDataSetChanged()
     }
+
 
 }

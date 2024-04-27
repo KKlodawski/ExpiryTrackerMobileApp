@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/itemListFragment">
+
+    <fragment
+        android:id="@+id/itemListFragment"
+        android:name="com.example.prmproj1.fragments.ItemListFragment"
+        android:label="fragment_item_list"
+        tools:layout="@layout/fragment_item_list" >
+        <action
+            android:id="@+id/action_itemListFragment_to_itemFormFragment"
+            app:destination="@id/itemFormFragment"
+            app:popUpTo="@id/itemListFragment" >
+            <argument
+                android:name="type"
+                android:defaultValue="New" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/itemFormFragment"
+        android:name="com.example.prmproj1.fragments.ItemFormFragment"
+        android:label="fragment_item_form"
+        tools:layout="@layout/fragment_item_form" >
+        <argument
+            android:name="type"
+            app:argType="com.example.prmproj1.model.FormType" />
+    </fragment>
+</navigation>
