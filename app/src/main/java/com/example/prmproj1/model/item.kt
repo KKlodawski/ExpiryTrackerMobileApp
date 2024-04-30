@@ -8,11 +8,23 @@ enum class Category {
     COSMETICS
 }
 
+enum class UnitType {
+    pcs,
+    unit,
+    g,
+    kg,
+    ml,
+    l,
+
+
+}
+
 data class item(
     val title: String,
     val expireDate: LocalDate,
     val category: Category,
-    val quantity: Int?
+    val quantity: Int?,
+    val unitType: UnitType?
 
 ) {
     fun isExpired() : Boolean {

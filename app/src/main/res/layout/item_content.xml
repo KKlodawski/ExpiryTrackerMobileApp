@@ -94,12 +94,14 @@
         <TextView
             android:id="@+id/itemQuantity"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
             android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/itemQuantityLabel"
             app:layout_constraintEnd_toEndOf="@+id/itemCategory"
             app:layout_constraintStart_toStartOf="@+id/itemCategory"
-            app:layout_constraintTop_toTopOf="@+id/itemQuantityLabel" />
+            app:layout_constraintTop_toTopOf="@+id/itemQuantityLabel"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/itemExpiredLabel"
@@ -119,8 +121,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="TextView"
-            app:layout_constraintEnd_toEndOf="@+id/itemQuantity"
-            app:layout_constraintStart_toStartOf="@+id/itemQuantity"
+            app:layout_constraintEnd_toEndOf="@+id/itemCategory"
+            app:layout_constraintStart_toStartOf="@+id/itemCategory"
             app:layout_constraintTop_toTopOf="@+id/itemExpiredLabel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

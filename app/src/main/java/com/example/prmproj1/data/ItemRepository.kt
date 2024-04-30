@@ -4,5 +4,8 @@ import com.example.prmproj1.model.item
 
 interface ItemRepository {
     fun getItemList() : List<item>
-    abstract fun add(itm: item)
+    fun add(itm: item)
+    fun getItemById(id: Int): item
+    fun edit(id: Int, itm: item)
+    fun remove(itm: item)
 }

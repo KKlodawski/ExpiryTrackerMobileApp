@@ -4,6 +4,7 @@ import android.R.layout
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.prmproj1.data.RepositoryLocator
 import com.example.prmproj1.databinding.FragmentItemFormBinding
 import com.example.prmproj1.model.Category
 import com.example.prmproj1.model.FormType
+import com.example.prmproj1.model.UnitType
 import com.example.prmproj1.model.item
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -27,6 +29,7 @@ class ItemFormFragment : Fragment() {
     private lateinit var type: FormType
     private lateinit var binding: FragmentItemFormBinding
     private lateinit var repository: ItemRepository
+    private var itemToEdit: item? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +57,7 @@ class ItemFormFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding.confirmationButton){
             setOnClickListener {
-                if(saveItem()) findNavController().popBackStack()
+                if(saveItem((type as? FormType.Edit)?.id)) findNavController().popBackStack()
                 else showPopUp("Unable to confirm")
             }
         }
@@ -72,6 +75,45 @@ class ItemFormFragment : Fragment() {
                 Category.entries.map { it.name }
             )
             (adapter as ArrayAdapter<String>).insert("Select option", 0)
+        }
+        binding.editUnitType.apply {
+            adapter = ArrayAdapter<String>(
+                requireContext(),
+                layout.simple_spinner_dropdown_item,
+                UnitType.entries.map { it.name }
+            )
+            (adapter as ArrayAdapter<String>).insert("Select option", 0 )
+        }
+        (type as? FormType.Edit)?.let {
+            itemToEdit = repository.getItemById(it.id).also {
+                with(binding.editTitle) {
+                    setText(it.title)
+                }
+                with(binding.editQuantity) {
+                    if (it.quantity != null) setText(it.quantity.toString())
+                }
+                with(binding.editExpireDate) {
+                    setText(it.expireDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString())
+                }
+                with(binding.editCategory) {
+                    for (i in 0 until this.count){
+                        if (this.getItemAtPosition(i).toString() == it.category.toString()) {
+                            setSelection(i)
+                            break
+                        }
+                    }
+                }
+                with(binding.editUnitType) {
+                    for(i in 0 until this.count) {
+                        if(this.getItemAtPosition(i).toString() == it.unitType.toString()) {
+                            setSelection(i)
+                            break
+                        }
+                    }
+                }
+            }
+
+
         }
     }
 
@@ -96,26 +138,52 @@ class ItemFormFragment : Fragment() {
         datePickerDialog.show()
     }
 
-    private fun saveItem(): Boolean {
-        if(binding.editTitle.text.toString().isEmpty() ||
-            binding.editExpireDate.text.toString().isEmpty() ||
-            binding.editCategory.selectedItem.toString().equals("Select option")
+    private fun saveItem(id: Int?): Boolean {
+        try {
+            val title = binding.editTitle.text.toString()
+            val expireDate = binding.editExpireDate.text.toString()
+            val category = binding.editCategory.selectedItem.toString()
+            val quantity = binding.editQuantity.text.toString()
+            val unitType: UnitType? = try {
+                UnitType.valueOf(binding.editUnitType.selectedItem.toString())
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+
+            if (title.isEmpty() ||
+                expireDate.isEmpty() ||
+                (quantity.isEmpty() && unitType != null) ||
+                (quantity.isNotEmpty() && unitType == null)
             ) return false
 
-        val itm = item(
-            binding.editTitle.text.toString(),
-            LocalDate.parse(
-                binding.editExpireDate.text.toString(),
+            val parsedDate: LocalDate = LocalDate.parse(
+                expireDate,
                 DateTimeFormatter.ofPattern("dd/MM/yyyy")
-            ),
-            Category.valueOf(binding.editCategory.selectedItem.toString()),
-            binding.editQuantity.text.toString().toIntOrNull()
-        )
+            )
 
-        if(itm.expireDate < LocalDate.now()) return false
+            if (parsedDate < LocalDate.now()) return false
 
-        repository.add(itm)
-        return true
+            val itm = itemToEdit?.copy(
+                title,
+                parsedDate,
+                Category.valueOf(category),
+                quantity.toIntOrNull(),
+                unitType
+            ) ?: item(
+                title,
+                parsedDate,
+                Category.valueOf(category),
+                quantity.toIntOrNull(),
+                unitType
+            )
+
+            if(id == null) repository.add(itm)
+            else repository.edit(id, itm)
+            return true
+        } catch (e: Throwable) {
+            Log.d("test", "SaveItem(): ${e.message.toString()}")
+        }
+        return false
     }
 
     private fun showPopUp(msg: String) {
